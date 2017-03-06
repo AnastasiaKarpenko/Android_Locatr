@@ -2,7 +2,6 @@ package ws.tilda.anastasia.locatr;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
 import com.google.android.gms.common.ConnectionResult;
