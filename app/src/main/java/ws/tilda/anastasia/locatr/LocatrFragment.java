@@ -2,6 +2,8 @@ package ws.tilda.anastasia.locatr;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -24,6 +26,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
+import java.io.IOException;
 import java.util.List;
 
 public class LocatrFragment extends Fragment {
@@ -153,6 +156,7 @@ public class LocatrFragment extends Fragment {
 
     private class SearchTask extends AsyncTask<Location, Void, Void> {
         private GalleryItem mGalleryItem;
+        private Bitmap mBitmap;
 
         @Override
         protected Void doInBackground(Location... params) {
@@ -165,8 +169,19 @@ public class LocatrFragment extends Fragment {
 
             mGalleryItem = items.get(0);
 
-            return null;
+            try {
+                byte[] bytes = fetchr.getUrlBytes(mGalleryItem.getUrl());
+                mBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            } catch (IOException ioe) {
+                Log.i(TAG, "Unable to download bitmap", ioe);
+            }
 
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            mImageView.setImageBitmap(mBitmap);
         }
     }
 }
