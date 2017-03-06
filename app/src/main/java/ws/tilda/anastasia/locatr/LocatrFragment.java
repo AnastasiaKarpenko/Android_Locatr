@@ -11,13 +11,10 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Gallery;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -36,6 +33,9 @@ public class LocatrFragment extends SupportMapFragment {
             Manifest.permission.ACCESS_COARSE_LOCATION,
     };
     public static final int REQUEST_LOCATION_PERMISSIONS = 0;
+    private Bitmap mMapImage;
+    private GalleryItem mMapItem;
+    private Location mCurrentLocation;
 
     private GoogleApiClient mClient;
 
