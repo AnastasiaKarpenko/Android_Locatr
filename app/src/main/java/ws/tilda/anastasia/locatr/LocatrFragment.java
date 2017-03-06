@@ -146,9 +146,11 @@ public class LocatrFragment extends SupportMapFragment {
     private class SearchTask extends AsyncTask<Location, Void, Void> {
         private GalleryItem mGalleryItem;
         private Bitmap mBitmap;
+        private Location mLocation;
 
         @Override
         protected Void doInBackground(Location... params) {
+            mLocation = params[0];
             FlickrFetchr fetchr = new FlickrFetchr();
             List<GalleryItem> items = fetchr.searchPhotos(params[0]);
 
@@ -170,7 +172,9 @@ public class LocatrFragment extends SupportMapFragment {
 
         @Override
         protected void onPostExecute(Void result) {
-
+            mMapImage = mBitmap;
+            mMapItem = mGalleryItem;
+            mCurrentLocation = mLocation;
         }
     }
 }
