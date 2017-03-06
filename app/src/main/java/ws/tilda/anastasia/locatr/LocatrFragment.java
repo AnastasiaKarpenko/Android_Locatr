@@ -1,9 +1,11 @@
 package ws.tilda.anastasia.locatr;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,10 +16,12 @@ import android.widget.ImageView;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 public class LocatrFragment extends Fragment {
+    public static final String TAG = "LocatrFragment";
     private ImageView mImageView;
     private GoogleApiClient mClient;
 
@@ -84,7 +88,17 @@ public class LocatrFragment extends Fragment {
 
         MenuItem searchItem = menu.findItem(R.id.action_locate);
         searchItem.setEnabled(mClient.isConnected());
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_locate:
+                findImage();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void findImage() {
@@ -92,5 +106,12 @@ public class LocatrFragment extends Fragment {
         request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
         request.setNumUpdates(1);
         request.setInterval(0);
+        LocationServices.FusedLocationApi
+                .requestLocationUpdates(mClient, request, new LocationListener() {
+                    @Override
+                    public void onLocationChanged(Location location) {
+                        Log.i(TAG, "Got a fix: " + location);
+                    }
+                });
     }
 }
