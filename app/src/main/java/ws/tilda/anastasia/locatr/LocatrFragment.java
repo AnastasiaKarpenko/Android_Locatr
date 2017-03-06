@@ -9,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,11 +24,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.SupportMapFragment;
 
 import java.io.IOException;
 import java.util.List;
 
-public class LocatrFragment extends Fragment {
+public class LocatrFragment extends SupportMapFragment {
     public static final String TAG = "LocatrFragment";
     private static final String[] LOCATION_PERMISSIONS = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -37,7 +37,6 @@ public class LocatrFragment extends Fragment {
     };
     public static final int REQUEST_LOCATION_PERMISSIONS = 0;
 
-    private ImageView mImageView;
     private GoogleApiClient mClient;
 
     public static LocatrFragment newInstance() {
@@ -69,16 +68,6 @@ public class LocatrFragment extends Fragment {
                     }
                 })
                 .build();
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_locatr, container, false);
-
-        mImageView = (ImageView) v.findViewById(R.id.image);
-        return v;
     }
 
     @Override
@@ -181,7 +170,7 @@ public class LocatrFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void result) {
-            mImageView.setImageBitmap(mBitmap);
+
         }
     }
 }
