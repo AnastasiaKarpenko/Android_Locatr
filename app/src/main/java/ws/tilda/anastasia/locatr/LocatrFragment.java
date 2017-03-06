@@ -3,6 +3,7 @@ package ws.tilda.anastasia.locatr;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +23,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+
+import java.util.List;
 
 public class LocatrFragment extends Fragment {
     public static final String TAG = "LocatrFragment";
@@ -137,6 +140,7 @@ public class LocatrFragment extends Fragment {
                     @Override
                     public void onLocationChanged(Location location) {
                         Log.i(TAG, "Got a fix: " + location);
+                        new SearchTask().execute(location);
                     }
                 });
     }
@@ -145,5 +149,24 @@ public class LocatrFragment extends Fragment {
         int result = ContextCompat
                 .checkSelfPermission(getActivity(),LOCATION_PERMISSIONS[0]);
         return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private class SearchTask extends AsyncTask<Location, Void, Void> {
+        private GalleryItem mGalleryItem;
+
+        @Override
+        protected Void doInBackground(Location... params) {
+            FlickrFetchr fetchr = new FlickrFetchr();
+            List<GalleryItem> items = fetchr.searchPhotos(params[0]);
+
+            if(items.size() == 0) {
+                return null;
+            }
+
+            mGalleryItem = items.get(0);
+
+            return null;
+
+        }
     }
 }
