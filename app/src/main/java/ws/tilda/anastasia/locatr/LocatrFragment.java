@@ -78,6 +78,7 @@ public class LocatrFragment extends SupportMapFragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 mMap = googleMap;
+                updateUI();
             }
         });
     }
@@ -155,7 +156,7 @@ public class LocatrFragment extends SupportMapFragment {
         return result == PackageManager.PERMISSION_GRANTED;
     }
 
-    private void updateUi() {
+    private void updateUI() {
         if (mMap == null || mMapImage == null) {
             return;
         }
@@ -204,6 +205,8 @@ public class LocatrFragment extends SupportMapFragment {
             mMapImage = mBitmap;
             mMapItem = mGalleryItem;
             mCurrentLocation = mLocation;
+
+            updateUI();
         }
     }
 }
