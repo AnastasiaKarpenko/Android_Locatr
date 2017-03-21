@@ -12,4 +12,4 @@ Doing this project I learned:
 
 Screenshot of the app:
 
-![alt tag] (https://github.com/AnastasiaKarpenko/Android_Locatr/blob/master/Locatr_screenshot.png)
+![alt tag](https://github.com/AnastasiaKarpenko/Android_Locatr/blob/master/Locatr_screenshot.png)
